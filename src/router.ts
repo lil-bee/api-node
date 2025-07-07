@@ -7,6 +7,13 @@ import {
   getProducts,
   updateProduct,
 } from "./handlers/product";
+import {
+  createUpdate,
+  deleteUpdate,
+  getOneUpdate,
+  getUpdates,
+  updateUpdate,
+} from "./handlers/update";
 
 const router = Router();
 
@@ -20,17 +27,15 @@ router.delete("/product/:id", deleteProduct);
 
 /** === UPDATE === **/
 
-router.get("/update", (req, res) => {
-  res.json({ message: "update" });
-});
+router.get("/update", getUpdates);
 
-router.get("/update/:id", (req, res) => {});
+router.get("/update/:id", getOneUpdate);
 router.post(
   "/update",
   body("title").exists().isString(),
   body("body").exists().isString(),
   body("productId").exists().isString(),
-  (req, res) => {}
+  createUpdate
 );
 router.put(
   "/update/:id",
@@ -38,9 +43,9 @@ router.put(
   body("body").optional(),
   body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]).optional(),
   body("version").optional(),
-  (req, res) => {}
+  updateUpdate
 );
-router.delete("/update/:id", (req, res) => {});
+router.delete("/update/:id", deleteUpdate);
 
 /** === UPDATE POINT === **/
 
