@@ -14,6 +14,7 @@ import {
   getUpdates,
   updateUpdate,
 } from "./handlers/update";
+import { handleInputErrors } from "./modules/middleware";
 
 const router = Router();
 
@@ -21,8 +22,18 @@ const router = Router();
 
 router.get("/product", getProducts);
 router.get("/product/:id", getOneProduct);
-router.post("/product", body("name").isString(), createProduct);
-router.put("/product/:id", body("name").isString(), updateProduct);
+router.post(
+  "/product",
+  body("name").isString(),
+  handleInputErrors,
+  createProduct
+);
+router.put(
+  "/product/:id",
+  body("name").isString(),
+  handleInputErrors,
+  updateProduct
+);
 router.delete("/product/:id", deleteProduct);
 
 /** === UPDATE === **/
